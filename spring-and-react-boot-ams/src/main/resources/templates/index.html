@@ -4,6 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"><head>
     <title>React + Spring</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
 <div id='root'></div>
@@ -13,5 +14,74 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
 
 <script type="text/babel"></script>
+<script type="text/babel">
+    // var User = React.createClass({
+    //     render: function() {
+    //         return (<div>user</div>);
+    //     }
+    // });
+    // var UserTable = React.createClass({
+    //     render: function() {
+    //         return (<div>user table</div>);
+    //     }
+    // });
+
+    var User = React.createClass({
+        render: function() {
+            return (
+                <tr>
+                    <td>{this.props.user.username}</td>
+                    <td>{this.props.user.password}</td>
+                    <td>{this.props.user.surname}</td>
+                    <td>{this.props.user.accno}</td>
+                    <td>{this.props.user.firstName}</td>
+                </tr>);
+        }
+    });
+
+
+    var UserTable = React.createClass({
+        render: function() {
+            var rows = [];
+            this.props.users.forEach(function(user) {
+                rows.push(<User user={user} />);
+            });
+            return (
+                <div className="container">
+                    <table className="table table-striped">
+
+                        <thead>
+                        <tr>
+                            <th>Username</th><th>Password</th><th>Surname</th><th>Acc No</th><th>First Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>{rows}</tbody>
+                    </table>
+                </div>);
+        }
+    });
+
+    var USERS = [
+        {username: 'John', password: 'happy', surname: 'Wilson', accno: 45, firstName: 'Jonny'},
+        {username: 'Monday', password: 'sad', surname: 'Willis', accno: 54, firstName: 'Balraj'},
+        {username: 'Christiano', password: 'angry', surname: 'Billy', accno: 34, firstName: 'Timmerson'},
+        {username: 'Timbo', password: 'hungry', surname: 'Timmy', accno: 33, firstName: 'Hope'}
+    ];
+
+    ReactDOM.render(
+        <UserTable users={USERS} />, document.getElementById('root')
+    );
+
+
+
+
+
+
+
+
+
+
+
+</script>
 </body>
 </html>
