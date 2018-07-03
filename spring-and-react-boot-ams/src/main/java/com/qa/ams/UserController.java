@@ -3,6 +3,7 @@ package com.qa.ams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,6 +20,7 @@ public class UserController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<User> getAllAccounts(){
 
+         userRepository.findAll();
         return userRepository.findAll();
     }
 
@@ -27,13 +29,26 @@ public class UserController {
         userRepository.save(user);
 
         return  userRepository.findAll();
+
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public List<User> delete(@PathVariable long id){
         userRepository.deleteById(id);
 
+
         return  userRepository.findAll();
+
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+    public List<User> edit(@PathVariable long id, @RequestBody User user){
+
+        userRepository.save(user);
+
+        return  userRepository.findAll();
+
+
     }
 
 }

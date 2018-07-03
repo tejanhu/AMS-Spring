@@ -49,10 +49,35 @@
                 }
             }
 
+
             $.ajax(settings).done(function (response) {
                 console.log(response);
             });
+
         },
+
+        handleUpdate() {
+            var self = this;
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "http://localhost:8080/api/users/edit/" + this.props.user.id,
+                "method": "PUT",
+                "headers": {
+                    "content-type": "application/json",
+                    "authorization": "Basic cm9vdDpwYXNzd29yZA==",
+                    "cache-control": "no-cache",
+                    "postman-token": "c21a80ef-1bb7-d141-25b1-01212941d3eb"
+                }
+            }
+
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
+
+        },
+
         render: function() {
             if (this.state.display==false) return null;
             else return (
