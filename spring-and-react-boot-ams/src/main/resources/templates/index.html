@@ -5,6 +5,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"><head>
     <title>React + Spring</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css">
 </head>
 <body>
 <div id='root'></div>
@@ -12,6 +13,9 @@
 <script src="https://fb.me/react-15.0.1.js"></script>
 <script src="https://fb.me/react-dom-15.0.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
+
 
 <script type="text/babel"></script>
 <script type="text/babel">
@@ -27,14 +31,34 @@
     // });
 
     var User = React.createClass({
+        getInitialState: function() {
+            return {display: true };
+        },
+        handleDelete() {
+            var self = this;
+            $.ajax({
+                url: self.props.employee._links.self.href,
+                type: 'DELETE',
+                success: function(result) {
+                    self.setState({display: false});
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    toastr.error(xhr.responseJSON.message);
+                }
+            });
+        },
         render: function() {
-            return (
+            if (this.state.display==false) return null;
+            else return (
                 <tr>
                     <td>{this.props.user.username}</td>
                     <td>{this.props.user.password}</td>
                     <td>{this.props.user.surname}</td>
                     <td>{this.props.user.accno}</td>
                     <td>{this.props.user.firstName}</td>
+                    <td>
+                        <button className="btn btn-info" onClick={this.handleDelete}>Delete</button>
+                    </td>
                 </tr>);
         }
     });
@@ -68,8 +92,34 @@
         {username: 'Timbo', password: 'hungry', surname: 'Timmy', accno: 33, firstName: 'Hope'}
     ];
 
+
+    var App = React.createClass({
+
+        loadUsersFromServer: function () {
+            var self = this;
+            $.ajax({
+                url: "http://localhost:8080/api/users/all"
+            }).then(function (data) {
+                self.setState({users: data});
+            });
+        },
+
+        getInitialState: function () {
+            return {users: []};
+        },
+
+        componentDidMount: function () {
+            this.loadUsersFromServer();
+        },
+
+        render() {
+            console.log(self.state);
+            return ( <UserTable users={this.state.users}/> );
+        }
+    });
+
     ReactDOM.render(
-        <UserTable users={USERS} />, document.getElementById('root')
+        <App />, document.getElementById('root')
     );
 
 
