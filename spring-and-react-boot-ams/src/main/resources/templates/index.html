@@ -63,7 +63,10 @@
                     <td>{this.props.user.accno}</td>
                     <td>{this.props.user.firstName}</td>
                     <td>
-                        <button className="btn btn-info" onClick={this.handleDelete}>Delete</button>
+                        <button className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
+                    </td>
+                    <td>
+                        <button className="btn btn-info" onClick={this.handleEdit}>Edit</button>
                     </td>
                 </tr>);
         }
@@ -82,7 +85,7 @@
 
                         <thead>
                         <tr>
-                            <th>Username</th><th>Password</th><th>Surname</th><th>Acc No</th><th>First Name</th>
+                            <th>Username</th><th>Password</th><th>Surname</th><th>Acc No</th><th>First Name</th><th>Delete</th><th>Edit</th>
                         </tr>
                         </thead>
                         <tbody>{rows}</tbody>
