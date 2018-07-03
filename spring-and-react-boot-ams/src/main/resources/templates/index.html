@@ -36,15 +36,21 @@
         },
         handleDelete() {
             var self = this;
-            $.ajax({
-                url: self.props.employee._links.self.href,
-                type: 'DELETE',
-                success: function(result) {
-                    self.setState({display: false});
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    toastr.error(xhr.responseJSON.message);
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "http://localhost:8080/api/users/delete/" + this.props.user.id,
+                "method": "GET",
+                "headers": {
+                    "content-type": "application/json",
+                    "authorization": "Basic cm9vdDpwYXNzd29yZA==",
+                    "cache-control": "no-cache",
+                    "postman-token": "c21a80ef-1bb7-d141-25b1-01212941d3eb"
                 }
+            }
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
             });
         },
         render: function() {
