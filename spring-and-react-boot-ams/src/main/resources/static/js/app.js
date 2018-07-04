@@ -250,7 +250,7 @@
     var self = this;
     $.ajax ({
     url: "http://localhost:8080/api/users/delete/" + this.props.user.id,
-    type: "GET",
+        type: "DELETE",
         success: function(res) {
             self.setState({delete: true});
         },
@@ -349,7 +349,16 @@
     componentDidMount: function () {
     this.loadUsersFromServer();
 },
+        componentWillMount: function () {
+            this.loadUsersFromServer();
+        },
 
+        statics:{
+            update: function(){
+                self.loadUsersFromServer();
+                this.render();
+            }
+        },
     render() {
     console.log(self.state);
 
