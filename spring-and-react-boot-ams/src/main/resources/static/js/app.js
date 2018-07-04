@@ -1,12 +1,26 @@
 
  var Navbar = React.createClass({
 
+     dashboard: function(){
+         ReactDOM.render(
+             <div>
+                 <Navbar/>,
+                 <Dashboard/>
+             </div>
+             , document.getElementById('root'));
+     },
+
      createAccount: function(){
 
      },
 
      viewAccount: function(){
-         
+        ReactDOM.render(
+            <div>
+                <Navbar/>,
+                <App/>
+            </div>
+            , document.getElementById('root'));
      },
 
      editAccount: function(){
@@ -29,7 +43,7 @@
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <a className="nav-link" href="/dashboard">Dashboard <span className="sr-only">(current)</span></a>
+                                <a className="nav-link" href="#" onClick={this.dashboard}>Dashboard <span className="sr-only">(current)</span></a>
                             </li>
                             {/*<li className="nav-item">*/}
                                 {/*<a className="nav-link" href="/createAccount">Create Account <span className="sr-only">(current)</span></a>*/}
@@ -45,7 +59,7 @@
                                     Account <span className="sr-only">(current)</span>
                                 </a>
                                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a className="dropdown-item" href="#" onClick={this.}>View Accounts</a>
+                                    <a className="dropdown-item" href="#" onClick={this.viewAccount}>View Accounts</a>
                                     <div className="dropdown-divider"></div>
                                     <a className="dropdown-item" href="#">Add Account</a>
                                 </div>
@@ -63,6 +77,14 @@
 
 
     });
+
+    var Dashboard = React.createClass({
+        render: function(){
+            return (
+                <div><h1>Dashboard</h1></div>
+            )
+        }
+    })
 
 
     var Jumbotron = React.createClass({
@@ -82,6 +104,8 @@
         render: function() {
             return (
                 <div>
+                    <Navbar/>
+                    <Jumbotron/>
                     <h1>Create an Account</h1>
                     <form ref="accountForm">
                         <div className="container">
@@ -196,12 +220,13 @@
 }
 });
 
-    var USERS = [
-{username: 'John', password: 'happy', surname: 'Wilson', accno: 45, firstName: 'Jonny'},
-{username: 'Monday', password: 'sad', surname: 'Willis', accno: 54, firstName: 'Balraj'},
-{username: 'Christiano', password: 'angry', surname: 'Billy', accno: 34, firstName: 'Timmerson'},
-{username: 'Timbo', password: 'hungry', surname: 'Timmy', accno: 33, firstName: 'Hope'}
-    ];
+
+//     var USERS = [
+// {username: 'John', password: 'happy', surname: 'Wilson', accno: 45, firstName: 'Jonny'},
+// {username: 'Monday', password: 'sad', surname: 'Willis', accno: 54, firstName: 'Balraj'},
+// {username: 'Christiano', password: 'angry', surname: 'Billy', accno: 34, firstName: 'Timmerson'},
+// {username: 'Timbo', password: 'hungry', surname: 'Timmy', accno: 33, firstName: 'Hope'}
+//     ];
 
 
     var App = React.createClass({
@@ -228,9 +253,9 @@
 
     return (
         <div>
-        <Navbar/>
-            <Jumbotron/>
-            <Form/>
+            {/*<Navbar/>*/}
+            {/*<Jumbotron/>*/}
+            {/*<Form/>*/}
         <UserTable users={this.state.users}/>
         </div>
     );
@@ -239,7 +264,7 @@
 
 
     ReactDOM.render(
-    <App />, document.getElementById('root')
+    <Form />, document.getElementById('root')
     );
 
 
