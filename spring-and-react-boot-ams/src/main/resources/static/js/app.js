@@ -1,22 +1,28 @@
 
-    // var User = React.createClass({
-    //     render: function() {
-    //         return (<div>user</div>);
-    //     }
-    // });
-    // var UserTable = React.createClass({
-    //     render: function() {
-    //         return (<div>user table</div>);
-    //     }
-    // });
+ var Navbar = React.createClass({
 
-    var Navbar = React.createClass({
+     createAccount: function(){
+
+     },
+
+     viewAccount: function(){
+         
+     },
+
+     editAccount: function(){
+
+     },
+
+     saveAccount: function(){
+
+     },
 
         render: function() {
             return(
+                <div className="navbarDiv">
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <a className="navbar-brand" href="/">AMS</a>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="/navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="#navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
@@ -25,32 +31,24 @@
                             <li className="nav-item active">
                                 <a className="nav-link" href="/dashboard">Dashboard <span className="sr-only">(current)</span></a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/createAccount">Create Account <span className="sr-only">(current)</span></a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/viewAccount">View Account <span className="sr-only">(current)</span></a>
-                            </li>
+                            {/*<li className="nav-item">*/}
+                                {/*<a className="nav-link" href="/createAccount">Create Account <span className="sr-only">(current)</span></a>*/}
+                            {/*</li>*/}
+                            {/*<li className="nav-item">*/}
+                                {/*<a className="nav-link" href="/viewAccount">View Account <span className="sr-only">(current)</span></a>*/}
+                            {/*</li>*/}
                             {/* <li className="nav-item">
              <a className="nav-link" href="/">Link</a>
            </li> */}
                             <li className="nav-item dropdown ">
-                                <a className="nav-link dropdown-toggle" onClick={this.showDropdownMenu} id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a className="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Account <span className="sr-only">(current)</span>
                                 </a>
-                                {this.state.displayMenu ? (
-                                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a className="dropdown-item" href="/viewAccount">View Accounts</a>
-                                            <div className="dropdown-divider"></div>
-                                            <a className="dropdown-item" href="/createAccount">Add Account</a>
-                                            {/* <div className="dropdown-divider"></div>
-               <a className="dropdown-item" href="/">Something else here</a> */}
-                                        </div>
-                                    ):
-                                    (
-                                        null
-                                    )
-                                }
+                                   <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a className="dropdown-item" href="#" onClick={this.}>View Accounts</a>
+                                    <div className="dropdown-divider"></div>
+                                    <a className="dropdown-item" href="#">Add Account</a>
+                                </div>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link disabled" href="#">Disabled</a>
@@ -59,10 +57,63 @@
                     </div>
 
                 </nav>
+                </div>
             )
         }
 
 
+    });
+
+
+    var Jumbotron = React.createClass({
+        render: function(){
+            return (
+                <div className="jumbotron centering">
+                    <h1 className="display-3">Welcome to AMS</h1>
+                    <p className="lead">This is a simple account management system.</p>
+                    <hr className="my-4"></hr>
+                    <p>It allows users to create an account, view their account, update their account and save any changes on their account.</p>
+                </div>
+            )
+        }
+    });
+
+    var Form = React.createClass({
+        render: function() {
+            return (
+                <div>
+                    <h1>Create an Account</h1>
+                    <form ref="accountForm">
+                        <div className="container">
+                            <label htmlFor="uname" className="cred"><br/>Username:<br/></label>
+                            <input type="text" className="form-control" id="uname" ref="uname"
+                                   placeholder="Enter username"/>
+
+                            <label htmlFor="psw" className="cred"><br/>Password:<br/></label>
+                            <input type="password" className="form-control" id="psw" ref="psw"
+                                   placeholder="Enter password"/>
+
+                            <label htmlFor="fname" className="cred"><br/>First-name:<br/></label>
+                            <input type="text" className="form-control" id="fname" ref="name"
+                                   placeholder="Enter firstname"/>
+
+                            <label htmlFor="sname" className="cred"><br/>Surname:<br/></label>
+                            <input type="text" className="form-control" id="lname" ref="surname"
+                                   placeholder="Enter surname"/>
+
+                            <label htmlFor="accno" className="cred"><br/>Account number<br/></label>
+                            <input type="text" className="form-control" id="acc_no" ref="accno"
+                                   placeholder="Enter account number"/>
+                            <button type="submit" className="btn btn-primary" id="submit-btn"
+                                    onClick={(e) => this.addAccount(e)}>Submit
+                            </button>
+                        </div>
+                    </form>
+
+
+                </div>
+            )
+        }
     });
 
     var User = React.createClass({
@@ -105,6 +156,7 @@
     render: function() {
     if (this.state.delete) return null;
     else return (
+
     <tr>
     <td>{this.props.user.username}</td>
     <td>{this.props.user.password}</td>
@@ -130,6 +182,7 @@
 });
     return (
     <div className="container">
+
     <table className="table table-striped">
 
     <thead>
@@ -172,9 +225,18 @@
 
     render() {
     console.log(self.state);
-    return ( <UserTable users={this.state.users}/> );
+
+    return (
+        <div>
+        <Navbar/>
+            <Jumbotron/>
+            <Form/>
+        <UserTable users={this.state.users}/>
+        </div>
+    );
 }
 });
+
 
     ReactDOM.render(
     <App />, document.getElementById('root')
