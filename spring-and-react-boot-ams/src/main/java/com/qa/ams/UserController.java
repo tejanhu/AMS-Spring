@@ -32,12 +32,12 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public List<User> delete(@PathVariable long id){
+    @DeleteMapping(path = "/delete/{id}")
+    public @ResponseBody String delete(@PathVariable long id){
         userRepository.deleteById(id);
 
 
-        return  userRepository.findAll();
+        return  "Deleted user";
 
     }
 
