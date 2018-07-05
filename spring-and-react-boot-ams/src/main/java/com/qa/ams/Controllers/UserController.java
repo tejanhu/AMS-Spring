@@ -1,9 +1,10 @@
-package com.qa.ams;
+package com.qa.ams.Controllers;
 
+import com.qa.ams.Entity.User;
+import com.qa.ams.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

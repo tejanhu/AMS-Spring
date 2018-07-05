@@ -31,13 +31,6 @@
             , document.getElementById('root'));
      },
 
-     editAccount: function(){
-
-     },
-
-     saveAccount: function(){
-
-     },
 
         render: function() {
             return(

@@ -1,4 +1,4 @@
-package com.qa.ams;
+package com.qa.ams.Entity;
 
 import lombok.Data;
 
