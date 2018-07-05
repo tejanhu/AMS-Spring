@@ -244,8 +244,10 @@
 
     var User = React.createClass({
     getInitialState: function() {
-    return {display: true };
+    return {display: true, editing: false };
 },
+
+
     handleDelete() {
     var self = this;
     $.ajax ({
@@ -261,46 +263,123 @@
 });
 
 
-
 },
 
-    handleUpdate() {
-    var self = this;
-        $.ajax ({
-            url: "http://localhost:8080/api/users/edit/" + this.props.user.id,
-            type: "PUT",
-            success: function(res) {
-                self.setState({update: true});
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                toastr.error("Error!");
+        onClick: function() {
+            const data = {
+                "username": this.state.username,
+                "password": this.state.password,
+                "firstName": this.state.firstName,
+                "surname": this.state.surname,
+                "accno": this.state.accno
+            };
+
+            const jsonData = JSON.stringify(data);
+
+            handleEdit()
+            {
+
+                this.setState({
+                    editing: true
+                });
+
+                var self = this;
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": "http://localhost:8080/api/users/edit/" + this.props.user.id,
+                    "method": "PUT",
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Basic cm9vdDpwYXNzd29yZA==",
+                        "cache-control": "no-cache",
+                        "postman-token": "6ccc7ce7-f432-bde1-9ede-c29fc5729618"
+                    },
+                    "processData": false,
+                    "data": jsonData
+                };
+
+                $.ajax(settings).done(function (response) {
+                    console.log(response);
+                });
+
             }
-});
 
-},
+        },
+        handleEdit() {
+
+            this.setState({
+                editing: true
+            });
+
+            var self = this;
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "http://localhost:8080/api/users/edit/" + this.props.user.id,
+                "method": "PUT",
+                "headers": {
+                    "content-type": "application/json",
+                    "authorization": "Basic cm9vdDpwYXNzd29yZA==",
+                    "cache-control": "no-cache",
+                    "postman-token": "6ccc7ce7-f432-bde1-9ede-c29fc5729618"
+                },
+                "processData": false,
+                "data": jsonData
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
+        },
+
+        save: function(){
+            this.props.updateUserDataText(this.refs.newText.value, this.props.index);
+            this.setState({
+                editing: false
+            });
+        },
 
     render: function() {
     if (this.state.delete) return null;
+    else if(this.state.editing){
+        return (
+            <tr>
+                <td><input defaultValue={this.props.user.username}/></td>
+                <td> <input defaultValue={this.props.user.password}/></td>
+                <td> <input defaultValue={this.props.user.surname}/></td>
+                <td><input defaultValue={this.props.user.accno}/></td>
+                <td> <input defaultValue={this.props.user.firstName}/></td>
+                <td>
+                    <button className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
+                </td>
+                <td>
+                    <button className="btn btn-info" onClick={this.handleEdit}>Edit</button>
+                </td>
+                <td>
+                    <button className="button-success" onClick={this.save}>Save</button>
+                </td>
+            </tr>
+        )
+    }
     else return (
 
     <tr>
-    <td>{this.props.user.username}</td>
-    <td>{this.props.user.password}</td>
-    <td>{this.props.user.surname}</td>
-    <td>{this.props.user.accno}</td>
-    <td>{this.props.user.firstName}</td>
-    <td>
-    <button className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
-    </td>
-    <td>
-    <button className="btn btn-info" onClick={this.handleEdit}>Edit</button>
-    </td>
+        <td>{this.props.user.username}</td>
+        <td>{this.props.user.password}</td>
+        <td>{this.props.user.surname}</td>
+        <td>{this.props.user.accno}</td>
+        <td>{this.props.user.firstName}</td>
+        <td>
+        <button className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
+        </td>
+        <td>
+        <button className="btn btn-info" onClick={this.handleEdit}>Edit</button>
+        </td>
     </tr>);
 }
-});
-
-
-    var UserTable = React.createClass({
+ })
+ var UserTable = React.createClass({
     render: function() {
     var rows = [];
     this.props.users.forEach(function(user) {
@@ -309,26 +388,24 @@
     return (
     <div className="container">
 
-    <table className="table table-striped">
-
-    <thead>
-    <tr>
-    <th>Username</th><th>Password</th><th>Surname</th><th>Acc No</th><th>First Name</th><th>Delete</th><th>Edit</th>
-    </tr>
-    </thead>
-    <tbody>{rows}</tbody>
-    </table>
-    </div>);
+        <table className="table table-striped">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Surname</th>
+                    <th>Acc No</th>
+                    <th>First Name</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+        </table>
+    </div>
+    );
 }
 });
-
-
-//     var USERS = [
-// {username: 'John', password: 'happy', surname: 'Wilson', accno: 45, firstName: 'Jonny'},
-// {username: 'Monday', password: 'sad', surname: 'Willis', accno: 54, firstName: 'Balraj'},
-// {username: 'Christiano', password: 'angry', surname: 'Billy', accno: 34, firstName: 'Timmerson'},
-// {username: 'Timbo', password: 'hungry', surname: 'Timmy', accno: 33, firstName: 'Hope'}
-//     ];
 
 
     var App = React.createClass({
