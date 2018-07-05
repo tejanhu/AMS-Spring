@@ -268,45 +268,84 @@
 },
         handleEdit() {
 
-            const data = {
-                "username": this.state.username,
-                "password": this.state.password,
-                "firstName": this.state.firstName,
-                "surname": this.state.surname,
-                "accno": this.state.accno
-            };
-
-            const jsonData = JSON.stringify(data);
-
             this.setState({
                 editing: true
             });
 
-            var self = this;
-            var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "http://localhost:8080/api/users/edit/" + this.props.user.id,
-                "method": "PUT",
-                "headers": {
-                    "content-type": "application/json",
-                    "authorization": "Basic cm9vdDpwYXNzd29yZA==",
-                    "cache-control": "no-cache",
-                    "postman-token": "6ccc7ce7-f432-bde1-9ede-c29fc5729618"
-                },
-                "processData": false,
-                "data": jsonData
-            };
-
-            $.ajax(settings).done(function (response) {
-                console.log(response);
-            });
+            // const data = {
+            //     "username": this.props.user.username,
+            //     "password": this.props.user.password,
+            //     "firstName": this.props.user.firstName,
+            //     "surname": this.props.user.surname,
+            //     "accno": this.props.user.accno
+            // };
+            //
+            // const jsonData = JSON.stringify(data);
+            //
+            // var self = this;
+            // var settings = {
+            //     "async": true,
+            //     "crossDomain": true,
+            //     "url": "http://localhost:8080/api/users/edit/" + this.props.user.id,
+            //     "method": "PUT",
+            //     "headers": {
+            //         "content-type": "application/json",
+            //         "authorization": "Basic cm9vdDpwYXNzd29yZA==",
+            //         "cache-control": "no-cache",
+            //         "postman-token": "6ccc7ce7-f432-bde1-9ede-c29fc5729618"
+            //     },
+            //     "processData": false,
+            //     "data": jsonData
+            // };
+            //
+            // $.ajax(settings).done(function (response) {
+            //     console.log(response);
+            // });
         },
 
         save: function(){
-            this.props.updateUserDataText(this.jsonData, this.props.user.id);
+
+
             this.setState({
                 editing: false
+            });
+           if(this.refs.newUsername.value == false
+               || this.refs.newPassword.value == false
+               || this.refs.newSurname == false
+               || this.refs.newAccountNumber == false
+               || this.refs.newFirstName == false){
+               alert(jsonData.alert)
+           }else {
+               this.props.user.username = this.refs.newFirstName.value
+               this.props.user.firstName = this.refs.newUsername.value
+               this.props.user.password = this.refs.newPassword.value
+               this.props.user.surname = this.refs.newSurname.value
+               this.props.user.accno = this.refs.newAccountNumber.value
+
+               var self = this;
+               $.ajax({
+                   url: "http://localhost:8080/api/users/edit/" + this.props.user.id,
+                   type: 'PUT',
+                   contentType: "application/json; charset=utf-8",
+                   data: JSON.stringify(this.props.user),
+                   success: function (result) {
+                       result.sort((a,b) => (a.id) - (b.id));
+                       //self.setState({display: false});
+                       toastr.success("Updated User!");
+
+                   },
+                   error: function (xhr, ajaxOptions, thrownError) {
+                       toastr.error(xhr.responseJSON.message);
+                   }
+               });
+           }
+        },
+
+        updateUserData:function(){
+            console.log("Updating userdata");
+
+            this.setState({
+                data: jsonData
             });
         },
 
@@ -315,11 +354,11 @@
     else if(this.state.editing){
         return (
             <tr>
-                <td><input defaultValue={this.props.user.username}/></td>
-                <td> <input defaultValue={this.props.user.password}/></td>
-                <td> <input defaultValue={this.props.user.surname}/></td>
-                <td><input defaultValue={this.props.user.accno}/></td>
-                <td> <input defaultValue={this.props.user.firstName}/></td>
+                <td><input ref="newUsername" defaultValue={this.props.user.username}/></td>
+                <td> <input ref="newPassword" defaultValue={this.props.user.password}/></td>
+                <td> <input ref="newSurname" defaultValue={this.props.user.surname}/></td>
+                <td><input ref="newAccountNumber" defaultValue={this.props.user.accno}/></td>
+                <td> <input ref="newFirstName" defaultValue={this.props.user.firstName}/></td>
                 <td>
                     <button className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
                 </td>
@@ -327,7 +366,7 @@
                     <button className="btn btn-info" onClick={this.handleEdit}>Edit</button>
                 </td>
                 <td>
-                    <button className="button-success" onClick={this.save}>Save</button>
+                    <button className="btn btn-success" onClick={this.save}>Save</button>
                 </td>
             </tr>
         )
@@ -414,7 +453,7 @@
             {/*<Navbar/>*/}
             {/*<Jumbotron/>*/}
             {/*<Form/>*/}
-        <UserTable users={this.state.users} updateUserDataText={this.updateUserData}/>
+        <UserTable users={this.state.users}/>
         </div>
     );
 }
