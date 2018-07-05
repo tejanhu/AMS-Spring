@@ -44,11 +44,11 @@
                 <div className="navbarDiv">
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <a className="navbar-brand" href="/">AMS</a>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="#navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
                                 <a className="nav-link" href="#" onClick={this.dashboard}>Dashboard <span className="sr-only">(current)</span></a>
@@ -201,6 +201,7 @@
 
             $.ajax(settings).done(function (response) {
                 console.log(response);
+                toastr.success("Added User!");
             });
 
         },
@@ -255,6 +256,7 @@
         type: "DELETE",
         success: function(res) {
             self.setState({delete: true});
+            toastr.success("Deleted User!");
         },
         error: function(xhr, ajaxOptions, thrownError) {
             toastr.error("Error!");
@@ -264,8 +266,8 @@
 
 
 },
+        handleEdit() {
 
-        onClick: function() {
             const data = {
                 "username": this.state.username,
                 "password": this.state.password,
@@ -275,38 +277,6 @@
             };
 
             const jsonData = JSON.stringify(data);
-
-            handleEdit()
-            {
-
-                this.setState({
-                    editing: true
-                });
-
-                var self = this;
-                var settings = {
-                    "async": true,
-                    "crossDomain": true,
-                    "url": "http://localhost:8080/api/users/edit/" + this.props.user.id,
-                    "method": "PUT",
-                    "headers": {
-                        "content-type": "application/json",
-                        "authorization": "Basic cm9vdDpwYXNzd29yZA==",
-                        "cache-control": "no-cache",
-                        "postman-token": "6ccc7ce7-f432-bde1-9ede-c29fc5729618"
-                    },
-                    "processData": false,
-                    "data": jsonData
-                };
-
-                $.ajax(settings).done(function (response) {
-                    console.log(response);
-                });
-
-            }
-
-        },
-        handleEdit() {
 
             this.setState({
                 editing: true
@@ -334,7 +304,7 @@
         },
 
         save: function(){
-            this.props.updateUserDataText(this.refs.newText.value, this.props.index);
+            this.props.updateUserDataText(this.jsonData, this.props.user.id);
             this.setState({
                 editing: false
             });
@@ -444,7 +414,7 @@
             {/*<Navbar/>*/}
             {/*<Jumbotron/>*/}
             {/*<Form/>*/}
-        <UserTable users={this.state.users}/>
+        <UserTable users={this.state.users} updateUserDataText={this.updateUserData}/>
         </div>
     );
 }
