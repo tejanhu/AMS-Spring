@@ -264,36 +264,6 @@
             this.setState({
                 editing: true
             });
-
-            // const data = {
-            //     "username": this.props.user.username,
-            //     "password": this.props.user.password,
-            //     "firstName": this.props.user.firstName,
-            //     "surname": this.props.user.surname,
-            //     "accno": this.props.user.accno
-            // };
-            //
-            // const jsonData = JSON.stringify(data);
-            //
-            // var self = this;
-            // var settings = {
-            //     "async": true,
-            //     "crossDomain": true,
-            //     "url": "http://localhost:8080/api/users/edit/" + this.props.user.id,
-            //     "method": "PUT",
-            //     "headers": {
-            //         "content-type": "application/json",
-            //         "authorization": "Basic cm9vdDpwYXNzd29yZA==",
-            //         "cache-control": "no-cache",
-            //         "postman-token": "6ccc7ce7-f432-bde1-9ede-c29fc5729618"
-            //     },
-            //     "processData": false,
-            //     "data": jsonData
-            // };
-            //
-            // $.ajax(settings).done(function (response) {
-            //     console.log(response);
-            // });
         },
 
         save: function(){
