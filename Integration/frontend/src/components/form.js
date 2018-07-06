@@ -1,15 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import '../App.css';
 import $ from 'jquery';
-import toastr from 'react-toastr';
-import Navbar from './navbar';
-import Jumbotron from './jumbotron';
 
 
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-// import { Navbar, NavItem, MenuItem, NavDropdown, Dropdown } from 'react-bootstrap';
-// import Main from './components/main';
 
 
 var Form = React.createClass({
@@ -37,9 +30,12 @@ var Form = React.createClass({
     },
 
     modifyPassword: function (e) {
-        this.setState({
-            password: e.target.value
-        })
+
+            this.setState({
+                password: e.target.value
+            })
+
+
     },
 
     modifyAccountNumber: function (e) {
@@ -86,31 +82,31 @@ var Form = React.createClass({
     },
     render: function() {
         return (
+
             <div>
-                {/*<Navbar/>*/}
-                {/*<Jumbotron/>*/}
                 <h1>Create an Account</h1>
                 <form ref="accountForm" onSubmit={this.onSubmit}>
                     <div className="container">
                         <label htmlFor="uname" className="cred"><br/>Username:<br/></label>
-                        <input type="text" className="form-control" id="uname" ref="uname"
-                               placeholder="Enter username" onChange={this.modifyUsername}/>
+                        <input type="text" className="form-control" maxlength="17" id="uname" ref="uname"
+                               placeholder="Enter username" required onChange={this.modifyUsername}/>
 
                         <label htmlFor="psw" className="cred"><br/>Password:<br/></label>
                         <input type="text" className="form-control" id="psw" ref="psw"
-                               placeholder="Enter password" onChange={this.modifyPassword}/>
+                               placeholder="Enter password" required validations={{matchRegexp: new RegExp("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,10}/")
+                        }} onChange={this.modifyPassword}/>
 
                         <label htmlFor="fname" className="cred"><br/>First-name:<br/></label>
-                        <input type="text" className="form-control" id="fname" ref="name"
-                               placeholder="Enter firstname" onChange={this.modifyFirstName}/>
+                        <input type="text" className="form-control" maxlength="15" id="fname" ref="name"
+                               placeholder="Enter firstname" required onChange={this.modifyFirstName}/>
 
                         <label htmlFor="sname" className="cred"><br/>Surname:<br/></label>
-                        <input type="text" className="form-control" id="lname" ref="surname"
-                               placeholder="Enter surname" onChange={this.modifySurname}/>
+                        <input type="text" className="form-control" maxlength="12" id="lname" ref="surname"
+                               placeholder="Enter surname" required onChange={this.modifySurname}/>
 
                         <label htmlFor="accno" className="cred"><br/>Account number<br/></label>
                         <input type="text" className="form-control" id="acc_no" ref="accno"
-                               placeholder="Enter account number" onChange={this.modifyAccountNumber}/>
+                               placeholder="Enter account number" maxlength="4" required onChange={this.modifyAccountNumber}/>
                         <button type="submit" className="btn btn-primary" id="submit-btn">Submit
                         </button>
                     </div>

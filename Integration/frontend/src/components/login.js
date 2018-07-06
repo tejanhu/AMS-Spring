@@ -1,8 +1,5 @@
 import React from 'react';
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import '../App.css';
-// import { Navbar, NavItem, MenuItem, NavDropdown, Dropdown } from 'react-bootstrap';
-// import Main from './components/main';
 import Dashboard from "./dashboard";
 
 var Login = React.createClass({
@@ -21,7 +18,7 @@ var Login = React.createClass({
                             <a className="forgot" href="/">Forgot password?</a>
                         </div>
                         <button type="submit" className="btn btn-primary" id="login-btn"
-                                onClick={this.viewDashboard}>Login
+                                onClick={this.dashboard}>Login
                         </button>
                     </div>
                 </form>

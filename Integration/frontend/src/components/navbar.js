@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '../App.css';
-import App from "./App";
 import Dashboard from "./dashboard";
 import Login from "./login";
-import User from "./user";
 import UserTable from "./userTable";
 import Footer from "./footer";
 

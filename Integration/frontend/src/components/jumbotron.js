@@ -1,6 +1,5 @@
 import React from 'react';
 import '../App.css';
-// import { Jumbotron } from 'react-bootstrap';
 
 
 var Jumbotron = React.createClass({
